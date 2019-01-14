@@ -39,7 +39,7 @@ export default class Server {
         //BODY PARSE
         this.bodyParser();
         //INICIAR EL SERVICIO DE SOCKET
-        this.escucharSockets();
+        // this.escucharSockets();
         //CONTENIDO HTML
         this.publicFolder();
     }

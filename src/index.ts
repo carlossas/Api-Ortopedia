@@ -1,7 +1,9 @@
 //CLASES
 import Server from './server/server';
 //RUTAS
-import router from './router/router';
+import { route_index } from './router/router';
+import { route_mysql } from './router/test';
+
 
 
 /*
@@ -24,7 +26,9 @@ const server = Server.instance;
 =======================================================================
 */
 
-server.app.use('/', router );
+server.app.use('/', route_index );
+server.app.use('/', route_mysql );
+
     
 /*
 =======================================================================

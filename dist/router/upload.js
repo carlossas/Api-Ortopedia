@@ -10,10 +10,13 @@ const express_2 = __importDefault(require("express"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 //FILE SYSTEM DE NODE
 const fs_1 = __importDefault(require("fs"));
+//PATH
+const path_1 = __importDefault(require("path"));
 //MANEJADOR DE FORM-DATA
 var multer = require('multer');
+var resolve = path_1.default.resolve(__dirname, '../uploads');
 var upload = multer({
-    dest: 'src/uploads/'
+    dest: resolve
 });
 var app = express_2.default();
 // Opciones por default del modulo fileupload
@@ -43,12 +46,12 @@ router.post('/upload', upload.single('imagen'), (req, res) => {
     //NOMBE DE ARCHIVO PERSONALIZADO
     var nombreArchivo = `${producto.nombre}-${producto.empresa}.${extensionArchivo}`;
     //MOVER EL ARCHIVO DE UN TEMPORAL A UN PATH DEL SERVIDOR
-    var path = `src\\uploads\\${producto.empresa}\\${nombreArchivo}`;
+    var dir = `${resolve}/${producto.empresa}/${nombreArchivo}`;
     //SI NO EXISTE EL DIRECTORIO DE LA EMPRESA, LO CREAMOS
-    if (!fs_1.default.existsSync(`src\\uploads\\${producto.empresa}`)) {
-        fs_1.default.mkdirSync(`src\\uploads\\${producto.empresa}`);
+    if (!fs_1.default.existsSync(`${resolve}/${producto.empresa}`)) {
+        fs_1.default.mkdirSync(`${resolve}/${producto.empresa}`);
     }
-    fs_1.default.rename(archivo.path, path, (err) => {
+    fs_1.default.rename(archivo.path, dir, (err) => {
         if (err)
             throw err;
         console.log('File Renamed!');

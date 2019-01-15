@@ -7,11 +7,14 @@ import express from 'express';
 import fileUpload from 'express-fileupload';
 //FILE SYSTEM DE NODE
 import fs from 'fs';
+//PATH
+import path from 'path';
 
 //MANEJADOR DE FORM-DATA
 var multer  = require('multer');
+var resolve = path.resolve(__dirname, '../uploads')
 var upload = multer({ 
-    dest: 'src/uploads/'
+    dest: resolve
 });
 
 var app = express();
@@ -56,14 +59,14 @@ router.post( '/upload', upload.single('imagen'),  (req: any, res: Response) =>{
     var nombreArchivo = `${ producto.nombre }-${ producto.empresa }.${ extensionArchivo }`;
 
     //MOVER EL ARCHIVO DE UN TEMPORAL A UN PATH DEL SERVIDOR
-    var path = `src\\uploads\\${ producto.empresa }\\${ nombreArchivo }`;
+    var dir = `${resolve}/${ producto.empresa }/${ nombreArchivo }`;
 
     //SI NO EXISTE EL DIRECTORIO DE LA EMPRESA, LO CREAMOS
-    if (!fs.existsSync(`src\\uploads\\${ producto.empresa }`)){
-        fs.mkdirSync(`src\\uploads\\${ producto.empresa }`);
+    if (!fs.existsSync(`${resolve}/${ producto.empresa }`)){
+        fs.mkdirSync(`${resolve}/${ producto.empresa }`);
     }
     
-    fs.rename(archivo.path, path, (err)=> {
+    fs.rename(archivo.path, dir, (err)=> {
         if (err) throw err;
         console.log('File Renamed!');
     });

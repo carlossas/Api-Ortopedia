@@ -3,6 +3,7 @@ import Server from './server/server';
 //RUTAS
 import { route_index } from './router/router';
 import { route_mysql } from './router/test';
+import { route_upload } from './router/upload';
 
 
 
@@ -28,6 +29,8 @@ const server = Server.instance;
 
 server.app.use('/', route_index );
 server.app.use('/', route_mysql );
+server.app.use('/', route_upload );
+
 
     
 /*

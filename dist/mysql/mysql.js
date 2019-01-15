@@ -9,7 +9,7 @@ class MySQL {
             host: 'localhost',
             user: 'root',
             password: 'adminadmin123',
-            database: 'node_ts',
+            database: 'krusty_servicios'
         });
         this.validarConexion();
     }

@@ -39,9 +39,9 @@ class Server {
         //OPCIONES DE CORS
         this.cors();
         //BODY PARSE
-        this.bodyParser();
+        // this.bodyParser();  !!!!!!!!!!!!!!ESTA GENERANDO ERROR CON LOS ARCHIVOS EN EL UPLOAD
         //INICIAR EL SERVICIO DE SOCKET
-        this.escucharSockets();
+        // this.escucharSockets();
         //CONTENIDO HTML
         this.publicFolder();
     }

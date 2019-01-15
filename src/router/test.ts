@@ -2,7 +2,7 @@ import { Router, Request, Response } from 'express';
 //MYSQL
 import MySQL from '../mysql/mysql';
 
-const _mysql = Router();
+var _mysql = Router();
 
 //OBTIENE TODOS LOS HEROES
 _mysql.get( '/heroes_mysql', (req: Request, res: Response) =>{

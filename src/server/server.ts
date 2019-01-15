@@ -14,7 +14,8 @@ import bodyParser from 'body-parser';
 //PATH
 import path from 'path';
 //FUNCIONES DE SOCKET
-import * as socketService from '../sockets/sockets'
+import * as socketService from '../sockets/sockets';
+
 
 export default class Server {
     private static _instance: Server;
@@ -37,7 +38,8 @@ export default class Server {
         //OPCIONES DE CORS
         this.cors();
         //BODY PARSE
-        this.bodyParser();
+        // this.bodyParser();  !!!!!!!!!!!!!!ESTA GENERANDO ERROR CON LOS ARCHIVOS EN EL UPLOAD
+        
         //INICIAR EL SERVICIO DE SOCKET
         // this.escucharSockets();
         //CONTENIDO HTML
@@ -74,6 +76,7 @@ export default class Server {
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
     }
+
 
     //CONFIGURACION DE CORS
     private cors(){

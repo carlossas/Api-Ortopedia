@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 //MYSQL
 const mysql_1 = __importDefault(require("../mysql/mysql"));
-const _mysql = express_1.Router();
+var _mysql = express_1.Router();
 //OBTIENE TODOS LOS HEROES
 _mysql.get('/heroes_mysql', (req, res) => {
     //CONSULTA A MYSQL

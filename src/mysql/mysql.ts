@@ -41,7 +41,7 @@ export default class MySQL{
             }
             //SI EL DATO BUSCADO NO EXISTE
             if(results.length === 0){
-                callback('El registro no existe');
+                callback(null, null);
             }else{
                 //TODO SALIO BIEN
                 callback(null, results);

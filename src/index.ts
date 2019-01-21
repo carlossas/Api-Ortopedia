@@ -2,8 +2,11 @@
 import Server from './server/server';
 //RUTAS
 import { route_index } from './router/router';
-import { route_mysql } from './router/test';
-import { route_upload } from './router/upload';
+import { route_usuario } from './router/usuario';
+import { route_productoUpload } from './router/productoUpload';
+import { route_producto } from './router/producto';
+import { route_busqueda } from './router/busqueda';
+import { route_token } from './router/token';
 
 
 
@@ -28,11 +31,11 @@ const server = Server.instance;
 */
 
 server.app.use('/', route_index );
-server.app.use('/', route_mysql );
-server.app.use('/', route_upload );
-
-
-    
+server.app.use('/', route_usuario);
+server.app.use('/', route_productoUpload);
+server.app.use('/', route_producto);
+server.app.use('/', route_busqueda);
+server.app.use('/', route_token);
 /*
 =======================================================================
 <!-- RUTAS DE LA CLASE END  -->

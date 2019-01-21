@@ -42,6 +42,7 @@ export default class Server {
         
         //INICIAR EL SERVICIO DE SOCKET
         // this.escucharSockets();
+
         //CONTENIDO HTML
         this.publicFolder();
     }
@@ -72,7 +73,7 @@ export default class Server {
     }
 
     //BODYPARSE 
-    private bodyParser(){
+    public bodyParser(){
         this.app.use(bodyParser.urlencoded({ extended: false }));
         this.app.use(bodyParser.json());
     }

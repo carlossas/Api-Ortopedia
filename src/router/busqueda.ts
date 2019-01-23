@@ -16,18 +16,25 @@ var router = Router();
 // ==========================================
 // BUSCAR EN CUALQUIER COLLECCION
 // ==========================================
-router.get('/buscar/:empresa/:tabla/:busqueda', (req: Request, res: Response) => {
+router.get('/buscar/:empresa/:tabla/:limit/:busqueda', (req: Request, res: Response) => {
     var empresa = req.params.empresa;
     var busqueda = req.params.busqueda;
     var tabla = req.params.tabla;
     var promesa: any;
+
+    var limit = req.params.limit || 5;
+
+    var desde = req.query.desde || 0;
+    
+    desde = Number(desde);
+    limit = Number(limit);
     //FUNCION DE JS QUE DEVUELVE UNA EXPRESION REGULAR,(VARIABLE Y STRING), PARA SER USADA DESPUES
     var regex = new RegExp(busqueda, 'i')
     
     //DETERMINAMOS EN QUE TABLA BUSCAR
     switch (tabla) {
         case 'productos':
-            promesa = buscarProductos(empresa, busqueda, regex)
+            promesa = buscarProductos(empresa, busqueda, regex, limit, desde)
             break;
 
         default:
@@ -42,7 +49,8 @@ router.get('/buscar/:empresa/:tabla/:busqueda', (req: Request, res: Response) =>
     promesa.then((data: any) => {
         return res.status(200).json({
             error: false,
-            [tabla]: data
+            [tabla]: data,
+            total: data.length
         });
     }).catch( (err: any)=>{
         return res.status(200).json({
@@ -55,7 +63,7 @@ router.get('/buscar/:empresa/:tabla/:busqueda', (req: Request, res: Response) =>
 
 
 //FUNCONES DE BUSQUEDA
-function buscarProductos(empresa: any, busqueda: any, regex: any) {
+function buscarProductos(empresa: any, busqueda: any, regex: any, limit:number, desde: number) {
 
     return new Promise((resolved, reject) => {
 
@@ -63,6 +71,8 @@ function buscarProductos(empresa: any, busqueda: any, regex: any) {
         Producto.find({empresa: empresa})
             //AQUI SE EJECUTAN LOS CAMPOS EN LOS QUE DESEO QUE COINCIDA LA BUSQUEDA
             .or([{ 'nombre': regex }, { 'categoria': regex }, { 'descripcion': regex }])
+            .skip(desde)
+            .limit(limit)
             .exec((err, productos) => {
                 if (err) {
                     let newErr = {
@@ -71,7 +81,11 @@ function buscarProductos(empresa: any, busqueda: any, regex: any) {
                     }
                     reject(newErr)
                 } else {
-                    resolved(productos)
+
+                    Producto.count({}, (err: any, conteo: any) => {
+                        resolved(productos)
+                    });
+                    
                 }
             })
     });

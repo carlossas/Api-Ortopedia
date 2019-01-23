@@ -26,14 +26,19 @@ var router = Router();
 // ==========================================
 // Obtener todos los productos
 // ==========================================
-router.get('/obtenerproductos/:empresa', (req: Request, res: Response) => {
+router.get('/obtenerproductos/:empresa/:limit', (req: Request, res: Response) => {
     var empresa = req.params.empresa;
+
+    var limit = req.params.limit || 5;
+
     var desde = req.query.desde || 0;
+    
     desde = Number(desde);
+    limit = Number(limit);
     //BUSQUEDA Y CAMPOS QUE DESEA OBTENER, SI NO SE DEFINE DEVUELVE TODOS LOS CAMPOS
     Producto.find({empresa: empresa})
         .skip(desde)
-        .limit(5)
+        .limit(limit)
         .exec(
             (err: any, productos: any) => {
 
@@ -45,7 +50,7 @@ router.get('/obtenerproductos/:empresa', (req: Request, res: Response) => {
                     });
                 }
 
-                console.log(productos);
+                // console.log(productos);
 
                 Producto.count({}, (err: any, conteo: any) => {
                     return res.status(200).json({
@@ -53,7 +58,7 @@ router.get('/obtenerproductos/:empresa', (req: Request, res: Response) => {
                         productos: productos,
                         total: conteo
                     });
-                })
+                });
 
             });
 

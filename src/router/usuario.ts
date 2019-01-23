@@ -116,7 +116,7 @@ router.post( '/login', (req: Request, res: Response) =>{
         usuarioDB.password = ':)';
 
         
-        var token = jwt.sign({ usuario: usuarioDB }, SEED, { expiresIn: 28800 }); // 8 horas
+        var token = jwt.sign({ usuario: usuarioDB }, SEED, { expiresIn: 14400 }); // 4 horas
 
         res.status(200).json({
             error: false,

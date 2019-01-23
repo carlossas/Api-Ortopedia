@@ -133,7 +133,6 @@ router.post( '/nuevoproducto', mdAutenticacion, upload.single('imagen'),  (req: 
                             descripcion: body.descripcion,
                             categoria: body.categoria,
                             empresa: body.empresa,
-                            sucursales: body.sucursales,
                             imagen: directorioImagen,
                             extension: extensionArchivo
                         });

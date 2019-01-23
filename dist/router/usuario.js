@@ -99,7 +99,7 @@ router.post('/login', (req, res) => {
         }
         // Crear un token!!!
         usuarioDB.password = ':)';
-        var token = jsonwebtoken_1.default.sign({ usuario: usuarioDB }, config_1.SEED, { expiresIn: 28800 }); // 8 horas
+        var token = jsonwebtoken_1.default.sign({ usuario: usuarioDB }, config_1.SEED, { expiresIn: 14400 }); // 4 horas
         res.status(200).json({
             error: false,
             usuario: usuarioDB,

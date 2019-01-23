@@ -12,6 +12,7 @@ const productoUpload_1 = require("./router/productoUpload");
 const producto_1 = require("./router/producto");
 const busqueda_1 = require("./router/busqueda");
 const token_1 = require("./router/token");
+const empresa_1 = require("./router/empresa");
 /*
 =======================================================================
 <!-- INSTANCIA DE LA CALSE START  -->
@@ -34,6 +35,7 @@ server.app.use('/', productoUpload_1.route_productoUpload);
 server.app.use('/', producto_1.route_producto);
 server.app.use('/', busqueda_1.route_busqueda);
 server.app.use('/', token_1.route_token);
+server.app.use('/', empresa_1.route_empresa);
 /*
 =======================================================================
 <!-- RUTAS DE LA CLASE END  -->

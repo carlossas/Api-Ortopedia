@@ -17,17 +17,21 @@ var router = express_1.Router();
 // ==========================================
 // BUSCAR EN CUALQUIER COLLECCION
 // ==========================================
-router.get('/buscar/:empresa/:tabla/:busqueda', (req, res) => {
+router.get('/buscar/:empresa/:tabla/:limit/:busqueda', (req, res) => {
     var empresa = req.params.empresa;
     var busqueda = req.params.busqueda;
     var tabla = req.params.tabla;
     var promesa;
+    var limit = req.params.limit || 5;
+    var desde = req.query.desde || 0;
+    desde = Number(desde);
+    limit = Number(limit);
     //FUNCION DE JS QUE DEVUELVE UNA EXPRESION REGULAR,(VARIABLE Y STRING), PARA SER USADA DESPUES
     var regex = new RegExp(busqueda, 'i');
     //DETERMINAMOS EN QUE TABLA BUSCAR
     switch (tabla) {
         case 'productos':
-            promesa = buscarProductos(empresa, busqueda, regex);
+            promesa = buscarProductos(empresa, busqueda, regex, limit, desde);
             break;
         default:
             return res.status(400).json({
@@ -40,7 +44,8 @@ router.get('/buscar/:empresa/:tabla/:busqueda', (req, res) => {
     promesa.then((data) => {
         return res.status(200).json({
             error: false,
-            [tabla]: data
+            [tabla]: data,
+            total: data.length
         });
     }).catch((err) => {
         return res.status(200).json({
@@ -50,12 +55,14 @@ router.get('/buscar/:empresa/:tabla/:busqueda', (req, res) => {
     });
 });
 //FUNCONES DE BUSQUEDA
-function buscarProductos(empresa, busqueda, regex) {
+function buscarProductos(empresa, busqueda, regex, limit, desde) {
     return new Promise((resolved, reject) => {
         //FUNCION QUE BUSCA UN DATO DENTRO DEL CAMPO QUE SE LE INDIQUE
         producto_1.Producto.find({ empresa: empresa })
             //AQUI SE EJECUTAN LOS CAMPOS EN LOS QUE DESEO QUE COINCIDA LA BUSQUEDA
             .or([{ 'nombre': regex }, { 'categoria': regex }, { 'descripcion': regex }])
+            .skip(desde)
+            .limit(limit)
             .exec((err, productos) => {
             if (err) {
                 let newErr = {
@@ -65,7 +72,9 @@ function buscarProductos(empresa, busqueda, regex) {
                 reject(newErr);
             }
             else {
-                resolved(productos);
+                producto_1.Producto.count({}, (err, conteo) => {
+                    resolved(productos);
+                });
             }
         });
     });

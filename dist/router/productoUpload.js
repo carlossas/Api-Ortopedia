@@ -111,7 +111,6 @@ router.post('/nuevoproducto', autenticacion_1.default, upload.single('imagen'), 
                             descripcion: body.descripcion,
                             categoria: body.categoria,
                             empresa: body.empresa,
-                            sucursales: body.sucursales,
                             imagen: directorioImagen,
                             extension: extensionArchivo
                         });

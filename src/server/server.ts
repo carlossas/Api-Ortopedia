@@ -81,7 +81,7 @@ export default class Server {
 
     //CONFIGURACION DE CORS
     private cors(){
-        this.app.use( cors({ origin: true, credentials: true  }) );
+        this.app.use( cors() );
         
     }
 

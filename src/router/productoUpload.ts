@@ -124,7 +124,8 @@ router.post( '/nuevoproducto', mdAutenticacion, upload.single('imagen'),  (req: 
         
         
                         //GUARDAMOS LA IMAGEN EN BASE DE DATOS
-                        let directorioImagen = `localhost:5000/uploads/${ body.empresa }/${ nombreArchivo }`;
+                        //AQUI DEBES COLOCAR EN EL FRONTEN http://166.62.103.25:5000/directorioImagen
+                        let directorioImagen = `uploads/${ body.empresa }/${ nombreArchivo }`;
         
                         //RECIBIR DATOS POR POST(BODY) Y ASIGARLOS AL OBJETO PRODUCTO
                         let nuevo_producto = new Producto ({

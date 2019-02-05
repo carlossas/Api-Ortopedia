@@ -7,6 +7,8 @@ import MongoDB from '../mongodb/mongodb';
 import Server from '../server/server';
 const server = Server.instance;
 server.bodyParser();
+//MIDDLEWARE
+import mdAutenticacion from '../middlewares/autenticacion'
 
 MongoDB.instance;
 var router = Router();
@@ -15,7 +17,7 @@ var router = Router();
 // ==========================================
 // INGRESAR UNA NUEVA EMPRESA
 // ==========================================
-router.post('/nuevaempresa', (req: Request, res: Response) => {
+router.post('/nuevaempresa', mdAutenticacion, (req: Request, res: Response) => {
 
     var body = req.body;
 

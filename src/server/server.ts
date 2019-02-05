@@ -8,7 +8,7 @@ import socketIO from 'socket.io';
 //HTTP
 import http from 'http';
 //CORS( Configura quien puede realizar pedidos a la api )
-import cors from 'cors';
+import cors from '../cors/cors';
 //BODY PARSER ( Permite usar envio de formularios en JSON )
 import bodyParser from 'body-parser';
 //PATH
@@ -82,6 +82,7 @@ export default class Server {
     //CONFIGURACION DE CORS
     private cors(){
         this.app.use( cors({ origin: true, credentials: true  }) );
+        
     }
 
     //INICIAR EL SERVIDOR

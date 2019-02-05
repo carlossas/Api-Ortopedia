@@ -23,7 +23,8 @@ var router = Router();
 // ==========================================
 // Crear un nuevo usuario
 // ==========================================
-router.post('/registrar', mdAutenticacion, (req: Request, res: Response) => {
+// router.post('/registrar', mdAutenticacion, (req: Request, res: Response) => {
+router.post('/registrar', /* mdAutenticacion, */ (req: Request, res: Response) => {
 
     var body = req.body;
     

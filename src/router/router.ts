@@ -1,8 +1,11 @@
 import { Router, Request, Response } from 'express';
+import MySQL from '../mysql/mysql';
 
 var router = Router();
 
-router.get( '/', (req: Request, res: Response) =>{
+MySQL.instance;
+
+router.get( '/usuario', (req: Request, res: Response) =>{
 
 
     //RECIBIR DATOS POR PARAMETROS
@@ -12,11 +15,24 @@ router.get( '/', (req: Request, res: Response) =>{
     // let id = req.body.id;
 
     // var body = req.body;
+    let consulta = 'SELECT * FROM `usuarios`';
 
-    return res.status(200).json({
-        ok: true,
-        mensaje: "Todo esta bien"
+    MySQL.ejecutarConsulta(consulta, (err: any, datos: any)=>{
+        if(err){
+            return res.status(400).json({
+                error: true,
+                mensaje: err
+            });
+        }else{
+            return res.status(200).json({
+                error: false,
+                mensaje: "Todo esta bien",
+                datos: datos
+            });
+        }
     });
+
+    
 
 });
 

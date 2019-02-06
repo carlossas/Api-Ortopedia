@@ -65,6 +65,9 @@ router.post('/registrar', /* mdAutenticacion, */ (req: Request, res: Response) =
                     });
                 }
 
+                // Crear un token!!!
+                new_user.password = 'k mira prro';
+
                 return res.status(200).json({
                     error: false,
                     usuario: new_user
@@ -114,7 +117,7 @@ router.post( '/login', (req: Request, res: Response) =>{
         }
 
         // Crear un token!!!
-        usuarioDB.password = ':)';
+        usuarioDB.password = 'k mira prro';
 
         
         var token = jwt.sign({ usuario: usuarioDB }, SEED, { expiresIn: 14400 }); // 4 horas

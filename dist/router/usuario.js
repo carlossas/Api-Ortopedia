@@ -12,8 +12,6 @@ const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const usuario_1 = require("../mongodb/models/usuario");
 //CONEXION DE MONGODB
 const mongodb_1 = __importDefault(require("../mongodb/mongodb"));
-//MIDDLEWARE
-const autenticacion_1 = __importDefault(require("../middlewares/autenticacion"));
 //SEED
 const config_1 = require("../config/config");
 //USAR BODY PARSER EN ESTA RUTA
@@ -25,7 +23,8 @@ var router = express_1.Router();
 // ==========================================
 // Crear un nuevo usuario
 // ==========================================
-router.post('/registrar', autenticacion_1.default, (req, res) => {
+// router.post('/registrar', mdAutenticacion, (req: Request, res: Response) => {
+router.post('/registrar', /* mdAutenticacion, */ (req, res) => {
     var body = req.body;
     //ASIGNA LOS DATOS DEL USUARIO QUE FUERON ENVIADOS A TRAVES DEL FORMULARIO POR MEDIO DE REQ.BODY
     var nuevo_Usuario = new usuario_1.Usuario({
@@ -62,6 +61,8 @@ router.post('/registrar', autenticacion_1.default, (req, res) => {
                         errorType: err
                     });
                 }
+                // Crear un token!!!
+                new_user.password = 'k mira prro';
                 return res.status(200).json({
                     error: false,
                     usuario: new_user
@@ -98,7 +99,7 @@ router.post('/login', (req, res) => {
             });
         }
         // Crear un token!!!
-        usuarioDB.password = ':)';
+        usuarioDB.password = 'k mira prro';
         var token = jsonwebtoken_1.default.sign({ usuario: usuarioDB }, config_1.SEED, { expiresIn: 14400 }); // 4 horas
         res.status(200).json({
             error: false,

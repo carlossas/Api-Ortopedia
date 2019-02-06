@@ -12,12 +12,14 @@ const mongodb_1 = __importDefault(require("../mongodb/mongodb"));
 const server_1 = __importDefault(require("../server/server"));
 const server = server_1.default.instance;
 server.bodyParser();
+//MIDDLEWARE
+const autenticacion_1 = __importDefault(require("../middlewares/autenticacion"));
 mongodb_1.default.instance;
 var router = express_1.Router();
 // ==========================================
 // INGRESAR UNA NUEVA EMPRESA
 // ==========================================
-router.post('/nuevaempresa', (req, res) => {
+router.post('/nuevaempresa', autenticacion_1.default, (req, res) => {
     var body = req.body;
     //CREAMOS LA ENTIDAD EMPRESA CON LOS DATOS RECIBIDOS POR POST
     var nueva_empresa = new empresa_1.Empresa({

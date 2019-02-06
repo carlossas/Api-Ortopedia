@@ -19,7 +19,7 @@ const socket_io_1 = __importDefault(require("socket.io"));
 //HTTP
 const http_1 = __importDefault(require("http"));
 //CORS( Configura quien puede realizar pedidos a la api )
-const cors_1 = __importDefault(require("cors"));
+const cors_1 = __importDefault(require("../cors/cors"));
 //BODY PARSER ( Permite usar envio de formularios en JSON )
 const body_parser_1 = __importDefault(require("body-parser"));
 //PATH
@@ -70,7 +70,14 @@ class Server {
     }
     //CONFIGURACION DE CORS
     cors() {
-        this.app.use(cors_1.default({ origin: true, credentials: true }));
+        //CONFIGURACION DE CORS VPS
+        // this.app.use(function(req, res, next) {
+        //     res.header("Access-Control-Allow-Origin", "*");
+        //     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        //     next();
+        // });
+        //CONFIGURACION DE CORS LOCAL
+        this.app.use(cors_1.default);
     }
     //INICIAR EL SERVIDOR
     start(callback) {

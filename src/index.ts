@@ -8,7 +8,7 @@ import { route_producto } from './router/producto';
 import { route_busqueda } from './router/busqueda';
 import { route_token } from './router/token';
 import { route_empresa } from './router/empresa';
-
+import { route_inventario } from './router/inventario';
 
 
 /*
@@ -38,7 +38,7 @@ server.app.use('/', route_producto);
 server.app.use('/', route_busqueda);
 server.app.use('/', route_token);
 server.app.use('/', route_empresa);
-
+server.app.use('/', route_inventario)
 /*
 =======================================================================
 <!-- RUTAS DE LA CLASE END  -->

@@ -65,6 +65,42 @@ router.get('/obtenerproductos/:empresa/:limit', (req: Request, res: Response) =>
     
 });
 
+// ==========================================
+// EDITAR PRODUCTO POR ID
+// ==========================================
+router.post('/editarProducto/:id', mdAutenticacion, (req:Request, res: Response)=>{
+
+    var id = req.params.id;
+    var body = req.body;
+
+    let query = { 
+    "descripcion" : body.descripcion, 
+    "nombre_comercial" : body.nombre_comercial,
+    "nombre" : body.nombre,
+    "categoria" : body.categoria
+    };
+
+    Producto.findByIdAndUpdate(id, query, (err: any, productoEditado: any)=>{
+        if (err) {
+            return res.status(500).json({
+                error: true,
+                mensaje: 'Error al editar el producto',
+                errors: err
+            });
+        }else{
+            return res.status(200).json({
+                error: false,
+                mensaje: 'Producto editado',
+                producto: productoEditado
+            });
+        }
+    });
+
+});
+
+// ==========================================
+// ELIMINAR PRODUCTO POR ID
+// ==========================================
 router.delete('/borrarProducto/:id', mdAutenticacion, (req: Request, res: Response) => {
 
     var id = req.params.id;

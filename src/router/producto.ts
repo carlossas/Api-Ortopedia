@@ -101,7 +101,7 @@ router.post('/editarProducto/:id', mdAutenticacion, (req:Request, res: Response)
 // ==========================================
 // ELIMINAR PRODUCTO POR ID
 // ==========================================
-router.delete('/borrarProducto/:id', mdAutenticacion, (req: Request, res: Response) => {
+router.post('/borrarProducto/:id', mdAutenticacion, (req: Request, res: Response) => {
 
     var id = req.params.id;
 

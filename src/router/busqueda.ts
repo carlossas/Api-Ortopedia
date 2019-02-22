@@ -49,8 +49,8 @@ router.get('/buscar/:empresa/:tabla/:limit/:busqueda', (req: Request, res: Respo
     promesa.then((data: any) => {
         return res.status(200).json({
             error: false,
-            [tabla]: data,
-            total: data.length
+            [tabla]: data.productos,
+            total: data.conteo
         });
     }).catch( (err: any)=>{
         return res.status(200).json({
@@ -83,7 +83,11 @@ function buscarProductos(empresa: any, busqueda: any, regex: any, limit:number, 
                 } else {
 
                     Producto.count({}, (err: any, conteo: any) => {
-                        resolved(productos)
+                        var resultados = {
+                            productos: productos,
+                            conteo: conteo
+                        }
+                        resolved(resultados)
                     });
                     
                 }

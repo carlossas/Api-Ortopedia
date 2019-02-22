@@ -54,6 +54,38 @@ router.get('/obtenerproductos/:empresa/:limit', (req, res) => {
         });
     });
 });
+// ==========================================
+// EDITAR PRODUCTO POR ID
+// ==========================================
+router.post('/editarProducto/:id', autenticacion_1.default, (req, res) => {
+    var id = req.params.id;
+    var body = req.body;
+    let query = {
+        "descripcion": body.descripcion,
+        "nombre_comercial": body.nombre_comercial,
+        "nombre": body.nombre,
+        "categoria": body.categoria
+    };
+    producto_1.Producto.findByIdAndUpdate(id, query, (err, productoEditado) => {
+        if (err) {
+            return res.status(500).json({
+                error: true,
+                mensaje: 'Error al editar el producto',
+                errors: err
+            });
+        }
+        else {
+            return res.status(200).json({
+                error: false,
+                mensaje: 'Producto editado',
+                producto: productoEditado
+            });
+        }
+    });
+});
+// ==========================================
+// ELIMINAR PRODUCTO POR ID
+// ==========================================
 router.delete('/borrarProducto/:id', autenticacion_1.default, (req, res) => {
     var id = req.params.id;
     producto_1.Producto.findOneAndDelete(id, (err, productoBorrado) => {

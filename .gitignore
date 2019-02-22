@@ -1,5 +1,6 @@
 # Logs
 logs
+dist/public/uploads
 *.log
 npm-debug.log*
 
@@ -27,5 +28,10 @@ build/Release
 # https://docs.npmjs.com/misc/faq#should-i-check-my-node-modules-folder-into-git
 node_modules
 
+#UPLOADS
+
+
 # MongoConexion
 
+
+*.png

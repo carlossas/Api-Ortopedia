@@ -11,6 +11,7 @@ import Server from '../server/server';
 import fs from 'fs';
 //PATH
 import path from 'path';
+import * as jsonnew from './probandoobjetos.json'
 
 //LOCALIZAR EL DIRECTORIO ACTUAL Y DESTINAR LA CARPETA DE IMAGENES A ESE PATH
 var resolve = path.resolve(__dirname, '../public/uploads');
@@ -36,6 +37,7 @@ router.get('/obtenerproductos/:empresa/:limit', (req: Request, res: Response) =>
     desde = Number(desde);
     limit = Number(limit);
     //BUSQUEDA Y CAMPOS QUE DESEA OBTENER, SI NO SE DEFINE DEVUELVE TODOS LOS CAMPOS
+                                        
     Producto.find({empresa: empresa})
         .skip(desde)
         .limit(limit)
@@ -151,4 +153,34 @@ router.post('/borrarProducto/:id', mdAutenticacion, (req: Request, res: Response
 
 });
 
+// ==========================================
+// Insertar muchos productos productos personalizadamente
+// ==========================================
+router.post( '/insertarVarios',  (req: Request, res: Response) =>{
+    
+    var body = req.body;
+
+        
+    let parse: any = JSON.stringify(jsonnew);
+    let newparse: any = JSON.parse(parse);    
+
+    Producto.insertMany(newparse.default, (err, insertados: any) => {
+        if (err){
+            return res.status(200).json({
+                error: false,
+                mensaje: 'Ocurrio un error insertar',
+                err: err,
+                // parse: parse,
+                newparse: newparse 
+            });
+        }else{
+            return res.status(200).json({
+                error: false,
+                mensaje: 'excelente',
+                insertados: insertados
+            });
+        }
+    })
+
+})
 export const route_producto = router;

@@ -68,12 +68,15 @@ function buscarProductos(empresa: any, busqueda: any, regex: any, limit:number, 
     return new Promise((resolved, reject) => {
 
         //FUNCION QUE BUSCA UN DATO DENTRO DEL CAMPO QUE SE LE INDIQUE
-        Producto.find({empresa: empresa})
+                                            //TEMPORALMENTE PARA TRASLADAR DATOS, NO DEVOLVEREMOS EL _id
+        Producto.find({empresa: empresa}, {'_id': false})
             //AQUI SE EJECUTAN LOS CAMPOS EN LOS QUE DESEO QUE COINCIDA LA BUSQUEDA
             .or([{ 'nombre': regex }, { 'categoria': regex }, { 'descripcion': regex }])
             .skip(desde)
             .limit(limit)
-            .exec((err, productos) => {
+            .exec((err, productos: any) => {
+
+
                 if (err) {
                     let newErr = {
                         mensaje:'Error al cargar productos',
@@ -83,9 +86,11 @@ function buscarProductos(empresa: any, busqueda: any, regex: any, limit:number, 
                 } else {
 
                     Producto.count({}, (err: any, conteo: any) => {
+                                        
+
                         var resultados = {
                             productos: productos,
-                            conteo: conteo
+                            conteo: conteo,
                         }
                         resolved(resultados)
                     });

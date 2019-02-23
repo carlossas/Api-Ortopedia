@@ -1,0 +1,21 @@
+[{
+        "nombre": "CORSET JEWET-ortopedia del sureste",
+        "nombre_comercial": "CORSET JEWET",
+        "descripcion": "Cuenta con 3 puntos de apoyo (pectoral, suprapúbico y dorsolumbar). Su estructura fabricada en aluminio ligero y la placa esternal móvil. Regulación de la altura al nivel de las placas de control lateral. Placa de tensión dorsolumbar regulable por banda y sistema de cierre. Placas acolchadas para mayor confort.",
+        "categoria": "nuevacategoria",
+        "empresa": "ortopedia del sureste",
+        "imagen": "uploads/ortopedia del sureste/CORSET JEWET-ortopedia del sureste.jpg",
+        "extension": "jpg",
+        "__v": 0
+    },
+    {
+        "nombre": "ESPALDERA TIRANTERA-ortopedia del sureste",
+        "nombre_comercial": "ESPALDERA TIRANTERA",
+        "descripcion": "Indicado en:  Corrección postural de dorso redondo o joroba",
+        "categoria": "nuevacategoria",
+        "empresa": "ortopedia del sureste",
+        "imagen": "uploads/ortopedia del sureste/ESPALDERA TIRANTERA-ortopedia del sureste.jpg",
+        "extension": "jpg",
+        "__v": 0
+    }
+]

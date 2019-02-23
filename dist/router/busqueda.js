@@ -58,7 +58,8 @@ router.get('/buscar/:empresa/:tabla/:limit/:busqueda', (req, res) => {
 function buscarProductos(empresa, busqueda, regex, limit, desde) {
     return new Promise((resolved, reject) => {
         //FUNCION QUE BUSCA UN DATO DENTRO DEL CAMPO QUE SE LE INDIQUE
-        producto_1.Producto.find({ empresa: empresa })
+        //TEMPORALMENTE PARA TRASLADAR DATOS, NO DEVOLVEREMOS EL _id
+        producto_1.Producto.find({ empresa: empresa }, { '_id': false })
             //AQUI SE EJECUTAN LOS CAMPOS EN LOS QUE DESEO QUE COINCIDA LA BUSQUEDA
             .or([{ 'nombre': regex }, { 'categoria': regex }, { 'descripcion': regex }])
             .skip(desde)
@@ -75,7 +76,7 @@ function buscarProductos(empresa, busqueda, regex, limit, desde) {
                 producto_1.Producto.count({}, (err, conteo) => {
                     var resultados = {
                         productos: productos,
-                        conteo: conteo
+                        conteo: conteo,
                     };
                     resolved(resultados);
                 });

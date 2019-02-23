@@ -2,6 +2,13 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result["default"] = mod;
+    return result;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 //MODELO
@@ -16,6 +23,7 @@ const server_1 = __importDefault(require("../server/server"));
 const fs_1 = __importDefault(require("fs"));
 //PATH
 const path_1 = __importDefault(require("path"));
+const jsonnew = __importStar(require("./probandoobjetos.json"));
 //LOCALIZAR EL DIRECTORIO ACTUAL Y DESTINAR LA CARPETA DE IMAGENES A ESE PATH
 var resolve = path_1.default.resolve(__dirname, '../public/uploads');
 //CREAR INSTANCIA DEL SERVIDOR 
@@ -118,6 +126,32 @@ router.post('/borrarProducto/:id', autenticacion_1.default, (req, res) => {
                     error: false,
                     producto: productoBorrado
                 });
+            });
+        }
+    });
+});
+// ==========================================
+// Insertar muchos productos productos personalizadamente
+// ==========================================
+router.post('/insertarVarios', (req, res) => {
+    var body = req.body;
+    let parse = JSON.stringify(jsonnew);
+    let newparse = JSON.parse(parse);
+    producto_1.Producto.insertMany(newparse.default, (err, insertados) => {
+        if (err) {
+            return res.status(200).json({
+                error: false,
+                mensaje: 'Ocurrio un error insertar',
+                err: err,
+                // parse: parse,
+                newparse: newparse
+            });
+        }
+        else {
+            return res.status(200).json({
+                error: false,
+                mensaje: 'excelente',
+                insertados: insertados
             });
         }
     });

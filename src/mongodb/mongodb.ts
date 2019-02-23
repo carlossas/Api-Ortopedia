@@ -9,7 +9,7 @@ export default class MongoDB{
     constructor(){
 
         console.log("Clase inicializada");
-        const URL = 'mongodb://krustyowner:krustyistheking2019@localhost:27017/krusty_servicios';
+        const URL = 'mongodb://krustyowner:krustyistheking2019@166.62.103.25:27017/krusty_servicios';
 
         //LOCAL
         // const URL = 'mongodb://localhost:27017/krusty_servicios';

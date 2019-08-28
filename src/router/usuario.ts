@@ -24,12 +24,12 @@ var router = Router();
 // Crear un nuevo usuario
 // ==========================================
 // router.post('/registrar', mdAutenticacion, (req: Request, res: Response) => {
-router.post('/registrar', /* mdAutenticacion, */ (req: Request, res: Response) => {
+router.post('/registrar', /* mdAutenticacion, */(req: Request, res: Response) => {
 
     var body = req.body;
-    
+
     //ASIGNA LOS DATOS DEL USUARIO QUE FUERON ENVIADOS A TRAVES DEL FORMULARIO POR MEDIO DE REQ.BODY
-    var nuevo_Usuario = new Usuario ({
+    var nuevo_Usuario = new Usuario({
         nombre: body.nombre,
         nombre_usuario: body.nombre_usuario,
         password: bcrypt.hashSync(body.password, 10),
@@ -38,9 +38,9 @@ router.post('/registrar', /* mdAutenticacion, */ (req: Request, res: Response) =
     });
 
     //BUSCAMOS QUE ESTE USUARIO NO EXISTA EN LA BASE DE DATOS
-    Usuario.findOne({ nombre_usuario:  body.nombre_usuario}, (err:any, user: any)=>{
+    Usuario.findOne({ nombre_usuario: body.nombre_usuario }, (err: any, user: any) => {
         //SI SURGE UN ERROR EN LA BUSQUEDA
-        if(err){
+        if (err) {
             return res.status(200).json({
                 error: true,
                 mensaje: "Error al buscar usuario",
@@ -48,16 +48,16 @@ router.post('/registrar', /* mdAutenticacion, */ (req: Request, res: Response) =
             });
         }
         //VALIDAMOS SI EXISTE EL USUARIO
-        if(user){
+        if (user) {
             return res.status(200).json({
                 error: true,
                 mensaje: "Este nombre de usuario ya existe en la base de datos."
             });
-        }else{
+        } else {
             //SI TODO SALE BIEN, CREAMOS EL USUARIO
-            Usuario.create(nuevo_Usuario, (err: any, new_user: any)=>{
+            Usuario.create(nuevo_Usuario, (err: any, new_user: any) => {
 
-                if(err){
+                if (err) {
                     return res.status(200).json({
                         error: true,
                         mensaje: "Hubo un error al crear el usuario",
@@ -78,7 +78,7 @@ router.post('/registrar', /* mdAutenticacion, */ (req: Request, res: Response) =
 
     });
 
-    
+
 });
 
 
@@ -86,7 +86,7 @@ router.post('/registrar', /* mdAutenticacion, */ (req: Request, res: Response) =
 // ==========================================
 // INGRESAR
 // ==========================================
-router.post( '/login', (req: Request, res: Response) =>{
+router.post('/login', (req: Request, res: Response) => {
 
     var body = req.body;
 
@@ -119,7 +119,7 @@ router.post( '/login', (req: Request, res: Response) =>{
         // Crear un token!!!
         usuarioDB.password = 'k mira prro';
 
-        
+
         var token = jwt.sign({ usuario: usuarioDB }, SEED, { expiresIn: 14400 }); // 4 horas
 
         res.status(200).json({
@@ -131,7 +131,7 @@ router.post( '/login', (req: Request, res: Response) =>{
 
     });
 
-    
+
 
 });
 

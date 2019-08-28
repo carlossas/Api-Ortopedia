@@ -34,6 +34,59 @@ app.use(express_fileupload_1.default());
 mongodb_1.default.instance;
 var router = express_1.Router();
 // ==========================================
+// Editar imagen de un producto
+// ==========================================
+router.post('/editarImagenProducto', autenticacion_1.default, upload.single('imagen'), (req, res) => {
+    var body = req.body;
+    //OBTENER NOMBRE DEL ARCHIVO
+    var archivo = req.file;
+    if (!req.file) {
+        return res.status(200).json({
+            error: true,
+            mensaje: 'No hay archivos seleccionados'
+        });
+    }
+    //NOMBE DE ARCHIVO PERSONALIZADO
+    var nombreArchivo = `${body.nombre}.${body.extension}`;
+    //MOVER EL ARCHIVO DE UN TEMPORAL A UN PATH DEL SERVIDOR
+    var dir = `${resolve}/${body.empresa}/${nombreArchivo}`;
+    //SI NO EXISTE EL DIRECTORIO DE LA EMPRESA, LO CREAMOS
+    if (!fs_1.default.existsSync(`${resolve}/${body.empresa}`)) {
+        return res.status(200).json({
+            error: true,
+            mensaje: 'El path no existe',
+        });
+    }
+    fs_1.default.rename(archivo.path, dir, (err) => {
+        if (err) {
+            return res.status(200).json({
+                error: true,
+                mensaje: 'Ocurrio un error al renombrar el archivo.',
+                err: err
+            });
+        }
+        else {
+            // OPTIMIZAR LA IMAGEN
+            Jimp.read(dir, (err, newImage) => {
+                newImage
+                    .quality(70) // set quality
+                    .resize(800, Jimp.AUTO)
+                    .write(dir); // save
+                if (err) {
+                    return res.status(200).json({
+                        error: true,
+                        mensaje: 'Ocurrio un error al optimizar la imagen'
+                    });
+                }
+                return res.status(200).json({
+                    error: false,
+                    mensaje: 'Imagen remplazada'
+                });
+            });
+        }
+    });
+});
+// ==========================================
 // Subir un nuevo producto
 // ==========================================
 router.post('/nuevoproducto', autenticacion_1.default, upload.single('imagen'), (req, res) => {
@@ -115,7 +168,7 @@ router.post('/nuevoproducto', autenticacion_1.default, upload.single('imagen'), 
                             imagen: directorioImagen,
                             extension: extensionArchivo
                         });
-                        //SI TODO SALE BIEN, CREAMOS EL USUARIO
+                        //SI TODO SALE BIEN, CREAMOS EL PRODUCTO
                         producto_1.Producto.create(nuevo_producto, (err, new_prod) => {
                             if (err) {
                                 return res.status(200).json({

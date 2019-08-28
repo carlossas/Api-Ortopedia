@@ -25,12 +25,12 @@ router.get('/buscar/:empresa/:tabla/:limit/:busqueda', (req: Request, res: Respo
     var limit = req.params.limit || 5;
 
     var desde = req.query.desde || 0;
-    
+
     desde = Number(desde);
     limit = Number(limit);
     //FUNCION DE JS QUE DEVUELVE UNA EXPRESION REGULAR,(VARIABLE Y STRING), PARA SER USADA DESPUES
     var regex = new RegExp(busqueda, 'i')
-    
+
     //DETERMINAMOS EN QUE TABLA BUSCAR
     switch (tabla) {
         case 'productos':
@@ -52,24 +52,24 @@ router.get('/buscar/:empresa/:tabla/:limit/:busqueda', (req: Request, res: Respo
             [tabla]: data.productos,
             total: data.conteo
         });
-    }).catch( (err: any)=>{
+    }).catch((err: any) => {
         return res.status(200).json({
             error: true,
             err: err
         });
     });
-    
+
 });
 
 
 //FUNCONES DE BUSQUEDA
-function buscarProductos(empresa: any, busqueda: any, regex: any, limit:number, desde: number) {
+function buscarProductos(empresa: any, busqueda: any, regex: any, limit: number, desde: number) {
 
     return new Promise((resolved, reject) => {
 
         //FUNCION QUE BUSCA UN DATO DENTRO DEL CAMPO QUE SE LE INDIQUE
-                                            //TEMPORALMENTE PARA TRASLADAR DATOS, NO DEVOLVEREMOS EL _id
-        Producto.find({empresa: empresa}, {'_id': false})
+        //TEMPORALMENTE PARA TRASLADAR DATOS, NO DEVOLVEREMOS EL _id
+        Producto.find({ empresa: empresa }, { '_id': false })
             //AQUI SE EJECUTAN LOS CAMPOS EN LOS QUE DESEO QUE COINCIDA LA BUSQUEDA
             .or([{ 'nombre': regex }, { 'categoria': regex }, { 'descripcion': regex }])
             .skip(desde)
@@ -79,14 +79,14 @@ function buscarProductos(empresa: any, busqueda: any, regex: any, limit:number, 
 
                 if (err) {
                     let newErr = {
-                        mensaje:'Error al cargar productos',
+                        mensaje: 'Error al cargar productos',
                         err: err
                     }
                     reject(newErr)
                 } else {
 
                     Producto.count({}, (err: any, conteo: any) => {
-                                        
+
 
                         var resultados = {
                             productos: productos,
@@ -94,7 +94,7 @@ function buscarProductos(empresa: any, busqueda: any, regex: any, limit:number, 
                         }
                         resolved(resultados)
                     });
-                    
+
                 }
             })
     });

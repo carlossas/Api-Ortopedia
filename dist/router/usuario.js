@@ -75,8 +75,10 @@ router.post('/registrar', /* mdAutenticacion, */ (req, res) => {
 // INGRESAR
 // ==========================================
 router.post('/login', (req, res) => {
+    console.log("entro");
     var body = req.body;
     usuario_1.Usuario.findOne({ nombre_usuario: body.nombre_usuario }, (err, usuarioDB) => {
+        console.log("2do pase");
         if (err) {
             return res.status(200).json({
                 error: true,

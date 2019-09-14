@@ -30,14 +30,14 @@ const server = server_1.default.instance;
 <!-- RUTAS DE LA API START  -->
 =======================================================================
 */
-server.app.use('/', router_1.route_index);
-server.app.use('/', usuario_1.route_usuario);
-server.app.use('/', productoUpload_1.route_productoUpload);
-server.app.use('/', producto_1.route_producto);
-server.app.use('/', busqueda_1.route_busqueda);
-server.app.use('/', token_1.route_token);
-server.app.use('/', empresa_1.route_empresa);
-server.app.use('/', inventario_1.route_inventario);
+server.app.use("/", router_1.route_index);
+server.app.use("/", usuario_1.route_usuario);
+server.app.use("/", productoUpload_1.route_productoUpload);
+server.app.use("/", producto_1.route_producto);
+server.app.use("/", busqueda_1.route_busqueda);
+server.app.use("/", token_1.route_token);
+server.app.use("/", empresa_1.route_empresa);
+server.app.use("/", inventario_1.route_inventario);
 /*
 =======================================================================
 <!-- RUTAS DE LA CLASE END  -->
